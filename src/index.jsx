@@ -1,34 +1,33 @@
 import React, {Component} from "react";
 import ReactDOM from "react-dom";
 import Message from "./Message";
+import Counter from "./Counter";
 
 class HelloMessage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      name: "World!",
-      message: "push me",
-      value: [],
-    };
-    this.increment = this.increment.bind(this);
-  }  
+  state = {
+    messages: ["hellno", "it's me"],
+};
   
-increment() {
-  const { value } = this.state;
-  this.setState({value: value.concat("it's ok!")})
+generateMessage = () => {
+  this.setState(({ messages }) => ({ messages: [...messages, "this is fine"] }));
 }
 
+
   render() {
-    const { value, name, message } = this.state;
+    const {  messages } = this.state;
+    const { name } = this.props;
 
       return (
         <div>
           <Message name/>
           <p>Hello {name}!</p>
-          <p>{message}</p>
-          <p>{value}</p>
-          <button onClick={this.increment} >add word</button>
+          <ul>
+            {messages.map((message, index) => (
+              <li key={index}>{message} </li>
+            ))}
+          </ul>
+          <button onClick={this.generateMessage} >add word</button>
+          <Counter />
         </div>
       );
     }
